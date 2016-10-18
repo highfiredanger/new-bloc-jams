@@ -1,3 +1,18 @@
+ var albumRadiohead = {
+     title: 'A Moon Shaped Pool',
+     artist: 'Radiohead',
+     label: 'XL Recordings',
+     year: '2016',
+     albumArtUrl: 'assets/images/radiohead.jpg',
+     songs: [
+         { title: 'Burn the Witch', duration: '1:01' },
+         { title: 'Daydreaming', duration: '5:01' },
+         { title: 'Decks Dark', duration: '3:21'},
+         { title: 'Desert Island Disk', duration: '3:14' },
+         { title: 'Ful Stop', duration: '2:15'}
+     ]
+ };
+
 var albumPicasso = {
      title: 'The Colors',
      artist: 'Pablo Picasso',
@@ -40,12 +55,13 @@ var createSongRow = function(songNumber, songName, songLength){
     return template;
 };
 
+
 var setCurrentAlbum = function(album){
-    var albumTitle = document.getElementsByClassName('album-view-title')[0];
-    var albumArtist = document.getElementsByClassName('album-view-artist')[0];
-    var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
-    var albumImage = document.getElementsByClassName('album-cover-art')[0];
-    var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
+var albumTitle = document.getElementsByClassName('album-view-title')[0];
+var albumArtist = document.getElementsByClassName('album-view-artist')[0];
+var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
+var albumImage = document.getElementsByClassName('album-cover-art')[0];
+var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
     
     albumTitle.firstChild.nodeValue = album.title;
     albumArtist.firstChild.nodeValue = album.artist;
@@ -60,5 +76,15 @@ var setCurrentAlbum = function(album){
 };
 
 window.onload = function(){
-    setCurrentAlbum(albumPicasso);
-}
+    setCurrentAlbum(albumRadiohead);
+    document.getElementsByClassName('album-cover-art')[0].addEventListener('click', function(){
+        var albumArray = [albumMarconi, albumPicasso, albumRadiohead];
+        var i = 0;
+        albumArray[i];
+        i++;
+        var thing = albumArray[i];
+        if (thing == albumArray.length){
+            thing = 0;
+        }
+    });
+};
