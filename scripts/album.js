@@ -90,18 +90,20 @@ var getSongItem = function(element) {
 var clickHandler = function(targetElement){
     
     var songItem = getSongItem(targetElement);
+    var thisSongNumber = songItem.getAttribute('data-song-number');
     
     if (currentlyPlayingSong === null){
         songItem.innerHTML = pauseButtonTemplate;
-        currentlyPlayingSong = songItem.getAttribute('data-song-number');
-    } else if (currentlyPlayingSong == songItem.getAttribute('data-song-number')) {
+        currentlyPlayingSong = thisSongNumber;
+    } else if (currentlyPlayingSong == thisSongNumber) {
         songItem.innerHTML = playButtonTemplate;
         currentlyPlayingSong = null;
-    } else if (currentlyPlayingSong !== songItem.getAttribute('data-song-number')) {
+    } else if (currentlyPlayingSong !== thisSongNumber) {
         var currentlyPlayingSongElement = document.querySelector('[data-song-number="' + currentlyPlayingSong + '"]'); // this line here, why are we using a query selector? 
-        currentlyPlayingSongElement.innerHTML = currentlyPlayingSongElement.getAttribute('data-song-number');
+        
+        currentlyPlayingSongElement.innerHTML = currentlyPlayingSong;
         songItem.innerHTML = pauseButtonTemplate;
-        currentlyPlayingSong = songItem.getAttribute('data-song-number');
+        currentlyPlayingSong = thisSongNumber;
     }
     
 };
