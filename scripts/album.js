@@ -1,3 +1,23 @@
+var filterTimeCode = function(timeInSeconds){
+    var s = parseFloat(timeInSeconds);
+    s = Math.floor(s);
+    var m = Math.floor(s/60);
+    s -= m*60;
+    return m + ":" + (s < 10 ? '0' + s : s)
+    
+    // (m < 10 ? '0' + m : m)+":"+(s < 10 ? '0' + s : s)
+}
+
+var setCurrentTimeInPlayerBar = function(currentTime){
+    var $timeElement = $('.current-time');
+    $timeElement.text(currentTime);
+};
+
+var setTotalTimeInPlayerBar = function(totalTime){
+    var $timeElement = $('.total-time');
+    $timeElement.text(totalTime);
+};
+
 var setSong = function(songNumber) {
     if (currentSoundFile){
         currentSoundFile.stop();
@@ -104,7 +124,7 @@ var createSongRow = function(songNumber, songName, songLength){
         '<tr class="album-view-song-item">'
     +   '   <td class="song-item-number" data-song-number="' + songNumber + '">' + songNumber + '</td>'
     +   '   <td class="song-item-title">' + songName + '</td>'
-    +   '   <td class="song-item-duration">' + songLength + '</td>'
+    +   '   <td class="song-item-duration">' + filterTimeCode(songLength) + '</td>'
     +   '</tr>'
     ;
     
@@ -121,7 +141,7 @@ var clickHandler = function() {
 	}
 	if (currentlyPlayingSongNumber !== songNumber) {
 		// Switch from Play -> Pause button to indicate new song is playing.
-		setSong(songNumber);
+        setSong(songNumber);
         currentSoundFile.play();
         updateSeekBarWhileSongPlays();
         currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
@@ -134,6 +154,8 @@ var clickHandler = function() {
         $(this).html(pauseButtonTemplate);
 		currentlyPlayingSongNumber = songNumber;
         updatePlayerBarSong();
+        
+        
         
 	} else if (currentlyPlayingSongNumber === songNumber) {
 		// Switch from Pause -> Play button to pause currently playing song.
@@ -202,6 +224,10 @@ var updateSeekBarWhileSongPlays = function() {
             var $seekBar = $('.seek-control .seek-bar');
             
             updateSeekPercentage($seekBar, seekBarFillRatio);
+            var getTime = filterTimeCode(currentSoundFile.getTime());
+            setCurrentTimeInPlayerBar(getTime);
+            var getDuration = filterTimeCode(currentSoundFile.getDuration());
+            setTotalTimeInPlayerBar(getDuration);
         });
     }
 };
